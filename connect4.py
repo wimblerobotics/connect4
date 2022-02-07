@@ -107,6 +107,43 @@ class Connect4Game:
         else:
             self._squares[lastRow][column]._occupied_by = occupancy
             return True
+
+    def next_cell(self, x, y, direction):
+        if direction == 'up':
+            new_x = x + 0
+            new_y = y - 1
+        elif direction == 'up_right':
+            new_x = x + 1
+            new_y = y - 1
+        elif direction == 'right':
+            new_x = x + 1
+            new_y = y + 0
+        elif direction == 'down_right':
+            new_x = x + 1
+            new_y = y + 1
+        elif direction == 'down':
+            new_x = x + 0
+            new_y = y + 1
+        elif direction == 'down_left':
+            new_x = x - 1
+            new_y = y + 1
+        elif direction == 'left':
+            new_x = x - 1
+            new_y = y - 0
+        elif direction == 'up_left':
+            new_x = x - 1
+            new_y = y - 1
+        else:
+            new_x = -1
+            new_y = -1
+        
+        if (new_x < 0) or (new_x >= self._cols) or (new_y < 0) or (new_y >= self._rows):
+            return False
+        else:
+            return (new_x, new_y)
+
+    # def is_4_in_a_row_starting_at(self, x, y):
+
     
     def is_column_filled(self, column):
         global CELL_EMPTY
@@ -179,6 +216,19 @@ class Connect4Game:
 
         if self.on_init() == False:
             self._running = False
+        
+        # elem = "[{x:1d},{y:1d}] "
+        # for dir in ['up', 'up_right', 'right', 'down_right', 'down', 'down_left', 'left', 'up_left']:
+        #     print("\n--- %s ---" % dir)
+        #     for y in range(6):
+        #         line = ""
+        #         for x in range(7):
+        #             next_cell = self.next_cell(x, y, dir)
+        #             if (next_cell):
+        #                 line += elem.format(x = next_cell[0], y = next_cell[1])
+        #             else:
+        #                 line += " -,-  "
+        #         print(line)
 
         while(self._running):
             for event in pygame.event.get():
