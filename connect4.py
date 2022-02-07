@@ -3,7 +3,6 @@ import pygame
 from pygame.locals import *
 import os
 import numpy as np
-from sqlalchemy import false, true
 
 BACKGROUND_COLOR = 'black'
 CELL_EMPTY = 0
@@ -36,7 +35,6 @@ class square:
 
     def render(self):
         global HEADER_HEIGHT, CELL_RED, CELL_YELLOW, CELL_EMPTY
-        print("x:", self._x, ", y: ", self._y)
         radius = self._diameter / 2
         pygame.draw.rect(self._surface, self._BACKGROUND, [
                          self._x * self._diameter, (self._y * self._diameter) + HEADER_HEIGHT, self._diameter, self._diameter])
@@ -105,10 +103,10 @@ class Connect4Game:
             y = y + 1
         
         if (lastRow == -1):
-            return false
+            return False
         else:
             self._squares[lastRow][column]._occupied_by = occupancy
-            return true
+            return True
     
     def is_column_filled(self, column):
         global CELL_EMPTY
@@ -126,7 +124,7 @@ class Connect4Game:
         if event.type == pygame.QUIT:
             self._running = False
         elif event.type == pygame.KEYDOWN:
-            success = false
+            success = False
             current_player_cell = CELL_RED if self._current_player == PLAYER1 else CELL_YELLOW
             if event.key == pygame.K_1:
                 success = self.dropColumn(current_player_cell, 0)
